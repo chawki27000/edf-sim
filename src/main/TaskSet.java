@@ -14,6 +14,7 @@ public class TaskSet {
         tasks.add(ts);
     }
 
+
     public int getHyperPeriod() {
         int hyperperiod = 1;
 
@@ -44,22 +45,30 @@ public class TaskSet {
 
     public Task taskSelection() {
 
-        int absDeadline = tasks.get(0).getAbsDeadline();
+        int absDeadline = 2147483647;
+        Task ts = null;
 
-        for (int i = 1; i < tasks.size(); i++) {
-            if (tasks.get(i).getAbsDeadline() < absDeadline)
-                return tasks.get(i);
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).isTerminated())
+                System.out.println("Task " + tasks.get(i).getId() + " Is TERMINATED");
+
+            if (tasks.get(i).getAbsDeadline() < absDeadline
+                    && !tasks.get(i).isTerminated()) {
+                absDeadline = tasks.get(i).getAbsDeadline();
+                ts = tasks.get(i);
+            }
         }
-
-        return tasks.get(0);
+        return ts;
 
     }
 
     public boolean taskReleased(int clock) {
+//        System.out.println("CALL - taskReleased");
         for (Task ts : tasks) {
-            if (clock % ts.getT() == 0) {
+            if (clock % ts.getT() == 0 && ts.isTerminated()) {
                 ts.instanceInc();
-                System.out.println(ts.toString() + " Released at : " + clock);
+                System.out.println("RELEASE -- " + ts.toString() + " Released at : " + clock);
+                Main.event.push(EventType.TASK_SELECTION);
                 return true;
             }
         }

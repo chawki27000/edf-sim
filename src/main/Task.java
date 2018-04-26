@@ -10,13 +10,17 @@ public class Task {
 
     // preemptive Context
     private int progression;
+    private boolean terminated;
 
     public Task(int id, int t, int c, int d) {
         this.id = id;
         this.t = t;
         this.c = c;
         this.d = d;
+
         j = 0;
+        terminated = false;
+
     }
 
     public int getT() {
@@ -31,14 +35,30 @@ public class Task {
         return d;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public boolean isTerminated() {
+        return terminated;
+    }
+
     public void instanceInc() {
         j++;
         progression = 0;
+        terminated = false;
     }
 
     public boolean progres() {
         progression++;
-        return progression == c;
+
+        Main.simulationClock++;
+
+        if (progression >= c) {
+            terminated = true;
+            return true;
+        }
+        return false;
     }
 
     public int getAbsDeadline() {

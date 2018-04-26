@@ -2,12 +2,14 @@ package main;
 
 public class Main {
 
+    public static int simulationClock = 0;
+    public static Event event;
+
     public static void main(String[] args) {
 
-        // Simulation set-up
-        int simulationClock = 0;
 
-        Event event = new Event();
+        // Simulation set-up
+        event = new Event();
         event.push(EventType.TASK_SELECTION);
 
 
@@ -16,9 +18,9 @@ public class Main {
         EventType actual;
 
         // Task Creation and TaskSet Filling
-        Task ts1 = new Task(0,6, 2, 5);
-        Task ts2 = new Task(1,8, 2, 4);
-        Task ts3 = new Task(2,12, 4, 8);
+        Task ts1 = new Task(1, 6, 2, 5);
+        Task ts2 = new Task(2, 8, 2, 4);
+        Task ts3 = new Task(3, 12, 4, 8);
 
         TaskSet taskSet = new TaskSet();
         taskSet.addTask(ts1);
@@ -43,20 +45,28 @@ public class Main {
             }
 
             else if (actual == EventType.TASK_EXECUTION) {
-                System.out.println(selected.toString() + " Executed at : "+simulationClock);
 
-                if (selected.progres()){
-                    event.push(EventType.TASK_SELECTION);
-                } else {
-                    event.push(EventType.TASK_EXECUTION);
+                if (selected != null && !selected.isTerminated()){
+
+                    System.out.println("EXECUTION -- " + selected.toString() + " Executed at : " + simulationClock);
+
+                    if (selected.progres()) {
+                        event.push(EventType.TASK_SELECTION);
+                    } else {
+                        event.push(EventType.TASK_EXECUTION);
+                    }
+
                 }
-                simulationClock++;
+                event.push(EventType.TASK_ARRIVAL);
 
             }
 
             else if (actual == EventType.TASK_SELECTION) {
                 selected = taskSet.taskSelection();
-                System.out.println(selected.toString() + " Selected at : "+simulationClock);
+                if (selected != null)
+                    System.out.println("SELECTION -- " + selected.toString() + " Selected at : " + simulationClock);
+                else
+                    System.out.println("Anything selected at : "+simulationClock);
 
                 event.push(EventType.TASK_EXECUTION);
                 event.push(EventType.TASK_ARRIVAL);
