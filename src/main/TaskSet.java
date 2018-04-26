@@ -41,4 +41,29 @@ public class TaskSet {
 
         return a;
     }
+
+    public Task taskSelection() {
+
+        int absDeadline = tasks.get(0).getAbsDeadline();
+
+        for (int i = 1; i < tasks.size(); i++) {
+            if (tasks.get(i).getAbsDeadline() < absDeadline)
+                return tasks.get(i);
+        }
+
+        return tasks.get(0);
+
+    }
+
+    public boolean taskReleased(int clock) {
+        for (Task ts : tasks) {
+            if (clock % ts.getT() == 0) {
+                ts.instanceInc();
+                System.out.println(ts.toString() + " Released at : " + clock);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -10,4 +10,16 @@ public class Event {
     public Event() {
         eventQueue = new LinkedList<>();
     }
+
+    public void push(EventType eventType) {
+        eventQueue.add(eventType);
+    }
+
+    public EventType pop() {
+        return eventQueue.poll();
+    }
+
+    public boolean isEmpty() {
+        return eventQueue.isEmpty();
+    }
 }
