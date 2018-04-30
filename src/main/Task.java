@@ -43,23 +43,7 @@ public class Task {
         return terminated;
     }
 
-    public void instanceInc() {
-        j++;
-        progression = 0;
-        terminated = false;
-    }
 
-    public boolean progres() {
-        progression++;
-
-        Main.simulationClock++;
-
-        if (progression >= c) {
-            terminated = true;
-            return true;
-        }
-        return false;
-    }
 
     public int getAbsDeadline() {
         return (j - 1) * t + d;

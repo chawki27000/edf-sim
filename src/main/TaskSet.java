@@ -43,36 +43,5 @@ public class TaskSet {
         return a;
     }
 
-    public Task taskSelection() {
 
-        int absDeadline = 2147483647;
-        Task ts = null;
-
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).isTerminated())
-                System.out.println("Task " + tasks.get(i).getId() + " Is TERMINATED");
-
-            if (tasks.get(i).getAbsDeadline() < absDeadline
-                    && !tasks.get(i).isTerminated()) {
-                absDeadline = tasks.get(i).getAbsDeadline();
-                ts = tasks.get(i);
-            }
-        }
-        return ts;
-
-    }
-
-    public boolean taskReleased(int clock) {
-//        System.out.println("CALL - taskReleased");
-        for (Task ts : tasks) {
-            if (clock % ts.getT() == 0 && ts.isTerminated()) {
-                ts.instanceInc();
-                System.out.println("RELEASE -- " + ts.toString() + " Released at : " + clock);
-                Main.event.push(EventType.TASK_SELECTION);
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
