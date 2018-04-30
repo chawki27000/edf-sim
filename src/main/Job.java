@@ -7,6 +7,7 @@ public class Job {
     private int arrival_time;
     private int deadline;
     private int remaing;
+    int s;
 
     public Job(Task tau, int arrival_time) {
         this.tau = tau;
@@ -29,5 +30,9 @@ public class Job {
 
     public int getRemaing() {
         return remaing;
+    }
+
+    public void setRemaing(int remaing) {
+        this.remaing = remaing;
     }
 }

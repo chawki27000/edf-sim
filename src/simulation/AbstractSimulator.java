@@ -1,9 +1,9 @@
 package simulation;
 
 public class AbstractSimulator {
-    protected OrderedSet events;
+    public static OrderedSet eventList;
 
     public void insert(AbstractEvent e) {
-        events.insert(e);
+        eventList.insert(e);
     }
 }

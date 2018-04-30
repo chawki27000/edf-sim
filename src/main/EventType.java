@@ -1,4 +1,4 @@
-package simulation;
+package main;
 
 public enum EventType {
     TASK_ARRIVAL,

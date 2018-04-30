@@ -1,6 +1,8 @@
-package simulation;
+package main;
 
-import main.Task;
+import simulation.AbstractEvent;
+import simulation.AbstractSimulator;
+import simulation.Comparable;
 
 public class Event extends AbstractEvent {
 
