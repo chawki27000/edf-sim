@@ -15,9 +15,14 @@ public class Simulator extends AbstractSimulator {
     }
 
     public int simulate() {
-        while (!eventList.isEmpty() && similatorClock < MaxSimTime) {
+
+        while (!eventList.isEmpty() || similatorClock < MaxSimTime) {
 
             Event curr_ev = (Event) eventList.removeFirst();
+
+            if (curr_ev == null)
+                break;
+
             similatorClock = curr_ev.time;
 
             switch (curr_ev.event_type) {

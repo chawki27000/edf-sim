@@ -68,13 +68,15 @@ public class EDF {
     private void resched() {
         if (curr_job != null) {
             saveContext(curr_job);
-            saveTrace(curr_job);
+            saveTrace();
             curr_job = null;
         }
         if (activeJobs.size() == 0)
             return;
+
         Job j = pickNext();
         loadContext(j);
+
         createNewTrace(j);
     }
 
@@ -89,7 +91,7 @@ public class EDF {
         traces.add(t);
     }
 
-    private void saveTrace(Job j) {
+    private void saveTrace() {
         traces.get(traces.size() - 1).end = Simulator.similatorClock;
     }
 
